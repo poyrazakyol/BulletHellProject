@@ -31,11 +31,18 @@ public class EnemySpawner : MonoBehaviour
 
     void SpawnEnemy()
     {
-        
         int randomIndex = Random.Range(0, dungeonGen.floorPositions.Count);
         Vector3 spawnPos = dungeonGen.floorPositions[randomIndex];
-
         
-        Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
+        GameObject newEnemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
+        
+        EnemyAI ai = newEnemy.GetComponent<EnemyAI>();
+        GameDirector director = GetComponent<GameDirector>();
+        
+        if (ai != null && director != null)
+        {
+            ai.maxHealth = director.currentEnemyHealth;
+            ai.GetComponent<UnityEngine.AI.NavMeshAgent>().speed = director.currentEnemySpeed;
+        }
     }
 }

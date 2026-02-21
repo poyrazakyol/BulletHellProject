@@ -44,7 +44,7 @@ public class AutoShooter : MonoBehaviour
             Quaternion projectileRotation = Quaternion.LookRotation(directionToEnemy);
             
             
-            Instantiate(projectilePrefab, firePoint.position, projectileRotation);
+            ProjectilePool.Instance.GetProjectile(firePoint.position, projectileRotation);
         }
     }
 }

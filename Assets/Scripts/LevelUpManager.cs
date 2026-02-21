@@ -4,6 +4,7 @@ public class LevelUpManager : MonoBehaviour
 {
     [Header("Unlockable Weapons")]
     public GameObject orbitWeapon;
+    public PoisonDropper poisonDropper;
     
     [Header("User Interface")]
     public GameObject levelUpPanel;
@@ -57,6 +58,14 @@ public class LevelUpManager : MonoBehaviour
         ResumeGame();
     }
 
+    public void UnlockPoison()
+    {
+        if (poisonDropper != null)
+        {
+            poisonDropper.enabled = true;
+        }
+        ResumeGame();
+    }
     
     void ResumeGame()
     {

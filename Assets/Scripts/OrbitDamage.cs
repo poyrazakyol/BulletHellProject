@@ -8,7 +8,7 @@ public class OrbitDamage : MonoBehaviour
         if (other.CompareTag("Enemy"))
         {
             
-            other.GetComponent<EnemyAI>().Die();
+            other.GetComponent<EnemyAI>().TakeDamage(30f);
         }
     }
 }

@@ -3,10 +3,14 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
+    [Header("Health Settings")]
+    public float maxHealth = 30f;
+    private float currentHealth;
+    
     [Header("Attack Settings")]
-        public float damageAmount = 15f; 
-        public float attackRate = 1f;    
-        private float attackTimer;
+    public float damageAmount = 15f; 
+    public float attackRate = 1f;    
+    private float attackTimer;
     
     private Transform player;
     private NavMeshAgent agent;
@@ -31,11 +35,10 @@ public class EnemyAI : MonoBehaviour
 
     void Start()
     {
-        
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        
-        
         agent = GetComponent<NavMeshAgent>();
+        
+        currentHealth = maxHealth; 
     }
 
     void Update()
@@ -68,6 +71,16 @@ public class EnemyAI : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             attackTimer = 0f; 
+        }
+    }
+    
+    public void TakeDamage(float damageAmount)
+    {
+        currentHealth -= damageAmount;
+        
+        if (currentHealth <= 0)
+        {
+            Die();
         }
     }
 }
