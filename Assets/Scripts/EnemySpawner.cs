@@ -3,7 +3,8 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [Header("Enemy Settings")]
-    public GameObject enemyPrefab; 
+    public GameObject enemyPrefab;
+    public GameObject rangedEnemyPrefab;
     public float spawnRate = 1f;   
     
     private float spawnTimer;
@@ -34,7 +35,8 @@ public class EnemySpawner : MonoBehaviour
         int randomIndex = Random.Range(0, dungeonGen.floorPositions.Count);
         Vector3 spawnPos = dungeonGen.floorPositions[randomIndex];
         
-        GameObject newEnemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
+        GameObject prefabToSpawn = (Random.value > 0.2f) ? enemyPrefab : rangedEnemyPrefab;
+        GameObject newEnemy = Instantiate(prefabToSpawn, spawnPos, Quaternion.identity);
         
         EnemyAI ai = newEnemy.GetComponent<EnemyAI>();
         GameDirector director = GetComponent<GameDirector>();

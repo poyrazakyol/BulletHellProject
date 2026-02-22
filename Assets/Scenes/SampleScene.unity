@@ -979,12 +979,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
+  m_fontSize: 30
   m_fontSizeBase: 24
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 14
+  m_fontSizeMax: 30
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -1405,6 +1405,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 6542803960026011216, guid: 08b43da2539450b4587cbc25109dd0e2, type: 3}
+  rangedEnemyPrefab: {fileID: 6625684076096051808, guid: 0ef44195ee0a70940b2023ceb8ce5618, type: 3}
   spawnRate: 1
 --- !u!114 &1179629846
 MonoBehaviour:
@@ -1450,9 +1451,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94d9061608cfee74dad69e4d52f5826a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelUpPanel: {fileID: 1412360710}
+  upgradeButtons:
+  - {fileID: 1396084020}
+  - {fileID: 1933535974}
+  - {fileID: 2079736813}
+  buttonTexts:
+  - {fileID: 437677186}
+  - {fileID: 1198068696}
+  - {fileID: 2101510237}
+  allUpgrades:
+  - upgradeName: Upgrade Fire Rate
+    description: Deneme Desc
+    type: 0
+    maxLevel: 5
+    currentLevel: 0
+  - upgradeName: Upgrade Move Speed
+    description: Deneme Desc
+    type: 1
+    maxLevel: 3
+    currentLevel: 0
+  - upgradeName: Orbital Blade
+    description: Deneme Desc
+    type: 2
+    maxLevel: 1
+    currentLevel: 0
+  - upgradeName: Poison Steps
+    description: Deneme Desc
+    type: 3
+    maxLevel: 1
+    currentLevel: 0
+  - upgradeName: Increase Health
+    description: Deneme Desc
+    type: 4
+    maxLevel: 5
+    currentLevel: 0
   orbitWeapon: {fileID: 1926134487}
   poisonDropper: {fileID: 18027387}
-  levelUpPanel: {fileID: 1412360710}
 --- !u!114 &1179629848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1568,12 +1603,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
+  m_fontSize: 30
   m_fontSizeBase: 24
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 14
+  m_fontSizeMax: 30
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -1875,7 +1910,7 @@ GameObject:
   - component: {fileID: 1396084021}
   - component: {fileID: 1396084020}
   m_Layer: 5
-  m_Name: Btn_FireRate
+  m_Name: Btn_Upgrade1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1888,18 +1923,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1396084018}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.3, y: 1.7167, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 437677185}
-  m_Father: {fileID: 1412360711}
+  m_Father: {fileID: 1883465842}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -269.4, y: 0}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 131.66667, y: -75}
+  m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1396084020
 MonoBehaviour:
@@ -1947,8 +1982,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1179629847}
         m_TargetAssemblyTypeName: LevelUpManager, Assembly-CSharp
-        m_MethodName: UpgradeFireRate
-        m_Mode: 1
+        m_MethodName: SelectUpgrade
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2026,9 +2061,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1548669730}
-  - {fileID: 1396084019}
-  - {fileID: 1933535973}
-  - {fileID: 2079736812}
+  - {fileID: 1883465842}
   m_Father: {fileID: 1343073602}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2725,6 +2758,71 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1785000423}
   m_CullTransparentMesh: 1
+--- !u!1 &1883465841
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1883465842}
+  - component: {fileID: 1883465843}
+  m_Layer: 5
+  m_Name: ButtonContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1883465842
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1883465841}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1396084019}
+  - {fileID: 1933535973}
+  - {fileID: 2079736812}
+  m_Father: {fileID: 1412360711}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -50}
+  m_SizeDelta: {x: 850, y: 150}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1883465843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1883465841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 4
+  m_Spacing: 30
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1 &1889351312
 GameObject:
   m_ObjectHideFlags: 0
@@ -2871,7 +2969,7 @@ GameObject:
   - component: {fileID: 1933535975}
   - component: {fileID: 1933535974}
   m_Layer: 5
-  m_Name: Btn_MoveSpeed
+  m_Name: Btn_Upgrade2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2884,18 +2982,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1933535972}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.3, y: 1.7167, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1198068695}
-  m_Father: {fileID: 1412360711}
+  m_Father: {fileID: 1883465842}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.1, y: 0}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 425, y: -75}
+  m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1933535974
 MonoBehaviour:
@@ -2943,12 +3041,12 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1179629847}
         m_TargetAssemblyTypeName: LevelUpManager, Assembly-CSharp
-        m_MethodName: UnlockPoison
-        m_Mode: 1
+        m_MethodName: SelectUpgrade
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -3079,7 +3177,7 @@ GameObject:
   - component: {fileID: 2079736814}
   - component: {fileID: 2079736813}
   m_Layer: 5
-  m_Name: Btn_Range
+  m_Name: Btn_Upgrade3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3092,18 +3190,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2079736811}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.3, y: 1.7167, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2101510236}
-  m_Father: {fileID: 1412360711}
+  m_Father: {fileID: 1883465842}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 273.6, y: 0}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 718.3334, y: -75}
+  m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2079736813
 MonoBehaviour:
@@ -3151,12 +3249,12 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1179629847}
         m_TargetAssemblyTypeName: LevelUpManager, Assembly-CSharp
-        m_MethodName: UnlockOrbitWeapon
-        m_Mode: 1
+        m_MethodName: SelectUpgrade
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -3283,12 +3381,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
+  m_fontSize: 30
   m_fontSizeBase: 24
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 14
+  m_fontSizeMax: 30
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512

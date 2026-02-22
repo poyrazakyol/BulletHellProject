@@ -30,7 +30,22 @@ public class Projectile : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            other.GetComponent<EnemyAI>().TakeDamage(15f);
+            
+            EnemyAI meleeEnemy = other.GetComponent<EnemyAI>();
+            if (meleeEnemy != null)
+            {
+                meleeEnemy.TakeDamage(15f);
+            }
+            else
+            {
+                
+                RangedEnemyAI rangedEnemy = other.GetComponent<RangedEnemyAI>();
+                if (rangedEnemy != null)
+                {
+                    rangedEnemy.TakeDamage(15f);
+                }
+            }
+            
             Deactivate(); 
         }
         else if (other.CompareTag("Wall"))

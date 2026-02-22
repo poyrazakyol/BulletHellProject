@@ -16,7 +16,11 @@ public class PoisonDamage : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            other.GetComponent<EnemyAI>().TakeDamage(damagePerSecond * Time.deltaTime);
+            EnemyAI meleeEnemy = other.GetComponent<EnemyAI>();
+            if (meleeEnemy != null) meleeEnemy.TakeDamage(damagePerSecond * Time.deltaTime);
+
+            RangedEnemyAI rangedEnemy = other.GetComponent<RangedEnemyAI>();
+            if (rangedEnemy != null) rangedEnemy.TakeDamage(damagePerSecond * Time.deltaTime);
         }
     }
 }
