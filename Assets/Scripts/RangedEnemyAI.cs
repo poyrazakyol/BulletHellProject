@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 public class RangedEnemyAI : MonoBehaviour
 {
-    [Header("Helath Settings")]
+    [Header("Health Settings")]
     public float maxHealth = 20f; 
     public float currentHealth;
 
@@ -14,8 +14,10 @@ public class RangedEnemyAI : MonoBehaviour
     public GameObject projectilePrefab;
     public Transform firePoint;     
 
-    [Header("Effects")]
-    public GameObject xpGemPrefab;
+    [Header("Effects & Drops")]
+    public GameObject xpGemSmall;  // Mavi XP
+    public GameObject xpGemMedium; // Yeşil XP
+    public GameObject xpGemLarge;  // Kırmızı XP
     public GameObject deathEffectPrefab;
 
     private Transform player;
@@ -27,7 +29,6 @@ public class RangedEnemyAI : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         currentHealth = maxHealth;
 
-        
         agent.stoppingDistance = attackRange; 
     }
 
@@ -35,20 +36,15 @@ public class RangedEnemyAI : MonoBehaviour
     {
         if (player == null) return;
 
-        
         agent.SetDestination(player.position);
-
         
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-
         
         if (distanceToPlayer <= attackRange)
         {
-            
             Vector3 lookDir = player.position - transform.position;
             lookDir.y = 0;
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDir), Time.deltaTime * 5f);
-
             
             fireTimer -= Time.deltaTime;
             if (fireTimer <= 0f)
@@ -61,7 +57,6 @@ public class RangedEnemyAI : MonoBehaviour
 
     void Shoot()
     {
-        
         Vector3 spawnPos = firePoint != null ? firePoint.position : transform.position + transform.forward;
         Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
     }
@@ -80,7 +75,23 @@ public class RangedEnemyAI : MonoBehaviour
             GameObject effect = Instantiate(deathEffectPrefab, dropPos, Quaternion.identity);
             Destroy(effect, 1f);
         }
-        Instantiate(xpGemPrefab, dropPos, Quaternion.identity);
+
+        // --- ŞANSA BAĞLI XP DÜŞÜRME SİSTEMİ ---
+        float randomVal = Random.value;
+        
+        if (randomVal <= 0.05f) 
+        {
+            Instantiate(xpGemLarge, dropPos, Quaternion.identity);
+        }
+        else if (randomVal <= 0.20f) 
+        {
+            Instantiate(xpGemMedium, dropPos, Quaternion.identity);
+        }
+        else 
+        {
+            Instantiate(xpGemSmall, dropPos, Quaternion.identity);
+        }
+
         Destroy(gameObject);
     }
 }

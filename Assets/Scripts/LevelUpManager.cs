@@ -133,8 +133,7 @@ public class LevelUpManager : MonoBehaviour
                 
                 break;
             case UpgradeType.MaxHealth:
-                playerHealth.maxHealth += 20f;
-                playerHealth.currentHealth += 20f; 
+                playerHealth.IncreaseMaxHealth(20f); 
                 break;
         }
     }

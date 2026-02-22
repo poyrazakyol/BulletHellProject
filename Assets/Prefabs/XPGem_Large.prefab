@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6542803960026011216
+--- !u!1 &1339559664241975714
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,49 +8,48 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8387902638452989901}
-  - component: {fileID: 635786313825140500}
-  - component: {fileID: 7403641003524050025}
-  - component: {fileID: 2737977294753683171}
-  - component: {fileID: 5108054632771389998}
-  - component: {fileID: 6220062072342935863}
+  - component: {fileID: 1648908852885272829}
+  - component: {fileID: 2384497341684273795}
+  - component: {fileID: 6655921062626373975}
+  - component: {fileID: 329369456197897629}
+  - component: {fileID: 6114735876392655908}
   m_Layer: 0
-  m_Name: Enemy_Melee
-  m_TagString: Enemy
+  m_Name: XPGem_Large
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8387902638452989901
+--- !u!4 &1648908852885272829
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6542803960026011216}
+  m_GameObject: {fileID: 1339559664241975714}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.46193978, y: 0.19134173, z: 0.19134173, w: 0.84462327}
+  m_LocalPosition: {x: 1.1337527, y: -1.9543195, z: 7.1531134}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &635786313825140500
+  m_LocalEulerAnglesHint: {x: 45, y: 45, z: 45}
+--- !u!33 &2384497341684273795
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6542803960026011216}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &7403641003524050025
+  m_GameObject: {fileID: 1339559664241975714}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &6655921062626373975
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6542803960026011216}
+  m_GameObject: {fileID: 1339559664241975714}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -89,13 +88,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &2737977294753683171
-CapsuleCollider:
+--- !u!65 &329369456197897629
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6542803960026011216}
+  m_GameObject: {fileID: 1339559664241975714}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -104,52 +103,24 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5108054632771389998
+--- !u!114 &6114735876392655908
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6542803960026011216}
+  m_GameObject: {fileID: 1339559664241975714}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d99abaef7f6e2146bf6548b9e07fb37, type: 3}
+  m_Script: {fileID: 11500000, guid: f7eee681faf7ba141897edb0242fbeab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 30
-  damageAmount: 15
-  attackRate: 1
-  xpGemSmall: {fileID: 232391130922680246, guid: c863a276758011247a47ee6af3114cfb, type: 3}
-  xpGemMedium: {fileID: 6785705913359749010, guid: 6ff2bff3799a4f540a1b07026b879d0e, type: 3}
-  xpGemLarge: {fileID: 1339559664241975714, guid: 9a2bd0ed9b9ce5e43a96409a37d6d39e, type: 3}
-  deathEffectPrefab: {fileID: 2946430984875533700, guid: cea1b4af94bc6704387c6c08cd7a926e, type: 3}
---- !u!195 &6220062072342935863
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6542803960026011216}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 1
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  xpAmount: 100
+  magnetRadius: 3
+  moveSpeed: 8

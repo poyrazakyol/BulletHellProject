@@ -152,5 +152,7 @@ MonoBehaviour:
   fireRate: 2
   projectilePrefab: {fileID: 904654647567056776, guid: 712c212f377940941bc95fda76002ae5, type: 3}
   firePoint: {fileID: 0}
-  xpGemPrefab: {fileID: 232391130922680246, guid: c863a276758011247a47ee6af3114cfb, type: 3}
+  xpGemSmall: {fileID: 232391130922680246, guid: c863a276758011247a47ee6af3114cfb, type: 3}
+  xpGemMedium: {fileID: 6785705913359749010, guid: 6ff2bff3799a4f540a1b07026b879d0e, type: 3}
+  xpGemLarge: {fileID: 1339559664241975714, guid: 9a2bd0ed9b9ce5e43a96409a37d6d39e, type: 3}
   deathEffectPrefab: {fileID: 2946430984875533700, guid: cea1b4af94bc6704387c6c08cd7a926e, type: 3}

@@ -10,12 +10,23 @@ public class PlayerHealth : MonoBehaviour
 
     [Header("UI")]
     public Image healthBarFill; 
-    public GameObject gameOverPanel; 
+    public GameObject gameOverPanel;
+    public RectTransform healthBarBackground;
+    
+    
+    private float initialBarWidth;
+    private float initialMaxHealth;
 
     void Start()
     {
-        
         currentHealth = maxHealth;
+        
+        if (healthBarBackground != null)
+        {
+            initialBarWidth = healthBarBackground.sizeDelta.x;
+            initialMaxHealth = maxHealth;
+        }
+        
         UpdateHealthBar();
     }
 
@@ -65,5 +76,23 @@ public class PlayerHealth : MonoBehaviour
         
         
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    public void IncreaseMaxHealth(float bonusAmount)
+    {
+        maxHealth += bonusAmount;
+        currentHealth += bonusAmount; 
+        
+        UpdateHealthBarSize(); // Barı fiziksel olarak uzat!
+        UpdateHealthBar();     // İçindeki kırmızılığı yeni orana göre ayarla
+    }
+    void UpdateHealthBarSize()
+    {
+        if (healthBarBackground != null)
+        {
+            // Doğru Orantı: (Yeni Max Can / Eski Max Can) * İlk Genişlik
+            // Örn: (120 / 100) * 200 = 240 piksel yeni genişlik!
+            float newWidth = (maxHealth / initialMaxHealth) * initialBarWidth;
+            healthBarBackground.sizeDelta = new Vector2(newWidth, healthBarBackground.sizeDelta.y);
+        }
     }
 }
