@@ -55,6 +55,17 @@ public class MobileJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler, 
     {
         joystickBackground.gameObject.SetActive(false);
     }
+    
+    // Bu obje kodla veya menü açılışıyla kapatıldığında otomatik çalışır
+    void OnDisable()
+    {
+        inputVector = Vector2.zero; // Hareketi sıfırla
+        if (joystickKnob != null) 
+        {
+            joystickKnob.anchoredPosition = Vector2.zero; // Topuzu merkeze al
+        }
+        HideJoystick(); // Görseli gizle
+    }
 
     // Karakter hareket scriptinin (PlayerMovement) buradaki değerleri okuyabilmesi için:
     public float Horizontal()

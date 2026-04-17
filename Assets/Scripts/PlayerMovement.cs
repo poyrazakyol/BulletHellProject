@@ -10,6 +10,9 @@ public class PlayerMovement : MonoBehaviour
     [Header("Mobil Kontroller")]
     public MobileJoystick joystick;
 
+    [Header("Animasyon")]
+    public Animator anim; // YENİ: Gorilin Animator referansı
+
     private Rigidbody rb;
     private Vector3 moveInput;
 
@@ -30,24 +33,28 @@ public class PlayerMovement : MonoBehaviour
         }
         
         moveInput = new Vector3(moveX, 0f, moveZ).normalized;
+
+        // --- YENİ: ANİMASYONU TETİKLEME ---
+        if (anim != null)
+        {
+            // moveInput.magnitude değeri karakter duruyorsa 0, hareket ediyorsa 0'dan büyük bir değer (maksimum 1) verir.
+            // Bu değeri Animator'deki Speed parametresine gönderiyoruz.
+            anim.SetFloat("Speed", moveInput.magnitude);
+        }
+        // ----------------------------------
     }
 
     void FixedUpdate()
     {
-        
         Vector3 targetVelocity = moveInput * moveSpeed;
         
         rb.linearVelocity = Vector3.Lerp(rb.linearVelocity, targetVelocity, acceleration * Time.fixedDeltaTime);
 
-        
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, rb.linearVelocity.y, rb.linearVelocity.z);
 
-        
         if (moveInput != Vector3.zero)
         {
-            
             Quaternion targetRotation = Quaternion.LookRotation(moveInput);
-            
             rb.MoveRotation(Quaternion.Slerp(rb.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime));
         }
     }

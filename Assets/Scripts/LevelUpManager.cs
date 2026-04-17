@@ -30,6 +30,10 @@ public class LevelUpManager : MonoBehaviour
     public GameObject levelUpPanel;
     public Button[] upgradeButtons; 
     public TextMeshProUGUI[] buttonTexts; 
+    
+    // --- YENİ EKLENEN KISIM ---
+    public GameObject mobileTouchZone; // Joystick panelini buraya bağlayacağız
+    // --------------------------
 
     [Header("Upgrade Pool")]
     public List<UpgradeOption> allUpgrades; 
@@ -60,6 +64,14 @@ public class LevelUpManager : MonoBehaviour
     {
         levelUpPanel.SetActive(true);
         Time.timeScale = 0f;
+
+        // --- YENİ EKLENEN KISIM ---
+        // Menü açıldığında görünmez joystick algılayıcısını kapat
+        if (mobileTouchZone != null)
+        {
+            mobileTouchZone.SetActive(false);
+        }
+        // --------------------------
 
         
         List<UpgradeOption> availableUpgrades = new List<UpgradeOption>();
@@ -142,5 +154,13 @@ public class LevelUpManager : MonoBehaviour
     {
         levelUpPanel.SetActive(false);
         Time.timeScale = 1f;
+
+        // --- YENİ EKLENEN KISIM ---
+        // Oyuna geri dönüldüğünde görünmez joystick algılayıcısını tekrar aç
+        if (mobileTouchZone != null)
+        {
+            mobileTouchZone.SetActive(true);
+        }
+        // --------------------------
     }
 }
