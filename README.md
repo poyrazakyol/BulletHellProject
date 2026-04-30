@@ -1,41 +1,52 @@
-# Top-Down 3D Roguelite Survivor
+# Gorillaz With Bananaz
 
-A Top-Down 3D Bullet Heaven / Survivor-like game developed in Unity, featuring algorithmic level generation and dynamic AI pathfinding. The game focuses on surviving endless waves of enemies in a procedurally generated dark fantasy dungeon.
+**Gorillaz With Bananaz** is a fast-paced, top-down Action Roguelite / Reverse Bullet Hell game developed for mobile platforms. Play as a magically gifted gorilla wielding enchanted bananas to fend off endless swarms of human captors in a high-stakes experiment orchestrated by hyper-intelligent space apes.
 
-## 🚀 Key Features
+## 🦍 Game Overview
+In this "Bullet Heaven" experience, players navigate a series of increasingly hostile arenas. The game blends absurd humor with tight, strategic arcade gameplay, focusing on survival through character builds and primal agility.
 
-* **Procedural Dungeon Generation:** Levels are dynamically created at runtime using a **Cellular Automata** algorithm. A Custom **Flood Fill (BFS)** algorithm is implemented to detect and remove isolated rooms, ensuring a fully accessible play area.
-* **Dynamic AI Navigation:** Enemies utilize Unity's AI Navigation package. The NavMesh is baked dynamically at runtime *after* the procedural dungeon is generated, allowing enemies to navigate complex, randomly generated corridors seamlessly.
-* **Dynamic Difficulty Scaling:** A central Game Director actively monitors survival time, dynamically increasing enemy health, movement speed, and spawn rates to create an escalating "bullet hell" experience.
-* **Optimized Object Pooling:** Zero garbage collection (GC) spikes during combat. All projectiles are managed through a custom Object Pool pattern, ensuring smooth frame rates even with hundreds of entities on screen.
-* **Enemy Diversity:** Features multiple enemy archetypes, including standard melee chasers and ranged spitters that force the player to dodge and constantly reposition.
-* **RNG Loot & Meta-Progression:** Enemies drop different tiers of XP gems (Small, Medium, Large) based on a weighted RNG system. The dynamic Level Up system pulls random abilities from a central pool, respecting maximum level caps for each upgrade (e.g., Fire Rate, Move Speed, Orbiting Weapons, AoE Poison Pools, Max Health).
-* **Real-time Stats & UI:** Fully responsive UI built with Auto-Size TextMeshPro and Horizontal Layout Groups. Includes a dynamic health bar that physically scales with max health upgrades, and a Pause/Stats Menu to track real-time player attributes.
-* **Game Feel & Polish:** Integrated custom screen shake mechanics, smooth Slerp/Lerp character movement, and particle effects (death bursts) to enhance the impact and weight of the combat.
+* **Platform:** Mobile (Currently on iOS)
+* **Engine:** Unity 6 (URP)
+* **Genre:** Action Roguelite / Reverse Bullet Hell
 
-## 🛠️ Technical Stack
-* **Engine:** Unity 6
-* **Language:** C#
-* **Render Pipeline:** Universal Render Pipeline (URP) for optimized lighting and post-processing in a dark atmospheric setting.
+## 🚀 Key Gameplay Features
 
-## ⚙️ Core Mechanics (Currently Implemented)
-- [x] Player Movement (Rigidbody Physics + Smooth Rotation)
-- [x] Cellular Automata Dungeon Generator
-- [x] Runtime NavMesh Baking
-- [x] Enemy AI (Pathfinding & Ranged Attacks)
-- [x] Dynamic Difficulty & Time Scaling
-- [x] Object Pooling (Projectiles)
-- [x] Auto-Shooter System with Range Detection
-- [x] RNG Drop System (Multiple XP Gem Tiers)
-- [x] Dynamic Upgrade Pool with Level Caps
-- [x] Game Flow: Main Menu & Scene Management
-- [x] UI/UX Integration (Scaling Health Bar, Dynamic Level Up Panel, Stats/Pause Menu)
-- [x] Weapon Types: Directed Projectiles, Orbiting Blades, AoE Poison Pools
+* **Hybrid Combat System:** Features traditional "auto-battler" mechanics combined with **Active-Targeting Skills**, requiring player input for high-impact strikes.
+* **The "Keep-2" Progression:** At the end of each level, your arsenal is purged. You must strategically choose exactly **two skills** to carry over to the next biome, ensuring a fresh meta-game for every stage.
+* **Boss Stalling (Risk vs. Reward):** Once a boss spawns, you aren't forced to kill it immediately. You can stall to farm more XP, but the boss gains stacking lethal buffs every minute.
+* **Curated Draft Pool:** Level up to choose from a randomized pool of 11 total skills (7 General, 3 Unique, and 1 Wild card).
+* **Strict Loadout Constraints:** Players are limited to 5 active slots—3 for magical weaponry and 2 dedicated to "Player Skills" (innate primate abilities), preventing over-reliance on projectiles.
 
-## 🎮 How to Play
-1. Clone the repository.
-2. Open the project in Unity.
-3. Open the `MainMenu` scene.
-4. Press **Play** and click "Play".
-5. Use `W, A, S, D` to move. Press `TAB` to view your current stats. 
-6. Avoid enemies, collect gems to level up, build your character, and survive as long as possible!
+## 🛠️ Technical Implementation
+
+### Mobile & UI Optimization
+* **Floating Joystick:** A dynamic "Mobile Touch Zone" system that appears at the point of contact, ensuring a clear field of view and preventing UI fatigue.
+* **Smart UI Interactivity:** Automatic disabling of joystick input during "Level Up" menus to prevent Raycast conflicts and movement bugs.
+* **iOS Deployment:** Full Xcode integration with managed signing and Bundle Identifier optimization for rapid prototyping on physical devices.
+
+### Movement & AI
+* **Humanoid Animation Rigging:** Physics-based 3D Gorilla character utilizing Unity’s Humanoid rig system with optimized "Bake Into Pose" animation clips to prevent axis drift.
+* **Isometric Camera Follow:** A custom camera script featuring adjustable offsets, smooth target tracking, and a **Screen Shake** system for high-impact combat feedback.
+* **Rigidbody Physics:** Movement is handled via velocity-based acceleration and Slerp-based rotation for a responsive, weightful feel.
+
+### Level Generation & Director
+* **Procedural Content:** Levels utilize Cellular Automata for layout generation with Flood-Fill algorithms to ensure map connectivity.
+* **Game Director:** A background system that monitors survival time to dynamically scale enemy health, speed, and spawn frequency.
+
+## ⚙️ Tech Stack
+* **Unity 6:** Core engine and rendering.
+* **Universal Render Pipeline (URP):** For optimized mobile performance and atmospheric lighting.
+* **C#:** Logic, AI, and system architecture.
+* **Mixamo:** Humanoid character animations.
+* **Xcode:** iOS deployment and device testing.
+
+## 📱 How to Build
+1. Clone the repository to your PC.
+2. Open the project in **Unity Hub** (Unity 6 required).
+
+## 👥 The Team
+* **Poyraz Akyol** - Lead Game Developer / Computer Engineer
+* **Mehmet Levent Postalcıoğlu** - Game Designer / Developer
+
+---
+*Developed as part of the Hacettepe University Game Technologies MSc program - Mobile Game Development Course.*
