@@ -1,8 +1,8 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-
 
 public enum UpgradeType
 {
@@ -12,7 +12,6 @@ public enum UpgradeType
     PoisonPool,
     MaxHealth
 }
-
 
 [System.Serializable]
 public class UpgradeOption
@@ -31,9 +30,12 @@ public class LevelUpManager : MonoBehaviour
     public Button[] upgradeButtons; 
     public TextMeshProUGUI[] buttonTexts; 
     
-    // --- YENİ EKLENEN KISIM ---
-    public GameObject mobileTouchZone; // Joystick panelini buraya bağlayacağız
-    // --------------------------
+    public GameObject mobileTouchZone; 
+
+    // --- YENİ EKLENEN VFX REFERANSI ---
+    [Header("VFX")]
+    public GameObject levelUpVFX; // Karakterin içindeki "LevelUp" objesini buraya bağlayacağız
+    // ----------------------------------
 
     [Header("Upgrade Pool")]
     public List<UpgradeOption> allUpgrades; 
@@ -46,7 +48,6 @@ public class LevelUpManager : MonoBehaviour
     private PlayerMovement playerMove;
     private PlayerHealth playerHealth;
 
-    
     private List<UpgradeOption> currentChoices = new List<UpgradeOption>();
 
     void Start()
@@ -65,15 +66,11 @@ public class LevelUpManager : MonoBehaviour
         levelUpPanel.SetActive(true);
         Time.timeScale = 0f;
 
-        // --- YENİ EKLENEN KISIM ---
-        // Menü açıldığında görünmez joystick algılayıcısını kapat
         if (mobileTouchZone != null)
         {
             mobileTouchZone.SetActive(false);
         }
-        // --------------------------
 
-        
         List<UpgradeOption> availableUpgrades = new List<UpgradeOption>();
         foreach (var upgrade in allUpgrades)
         {
@@ -85,37 +82,29 @@ public class LevelUpManager : MonoBehaviour
 
         currentChoices.Clear();
 
-        
         int choicesCount = Mathf.Min(3, availableUpgrades.Count);
-        
         
         foreach (var btn in upgradeButtons) btn.gameObject.SetActive(false);
 
         for (int i = 0; i < choicesCount; i++)
         {
-            
             int randomIndex = Random.Range(0, availableUpgrades.Count);
             UpgradeOption chosen = availableUpgrades[randomIndex];
-            
             
             availableUpgrades.RemoveAt(randomIndex); 
             currentChoices.Add(chosen);
 
-            
             upgradeButtons[i].gameObject.SetActive(true);
-            
             
             buttonTexts[i].text = $"{chosen.upgradeName} (Seviye {chosen.currentLevel + 1}/{chosen.maxLevel})\n<size=60%>{chosen.description}</size>";
         }
 
-        
         if (choicesCount == 0)
         {
             ResumeGame(); 
         }
     }
 
-    
     public void SelectUpgrade(int buttonIndex)
     {
         UpgradeOption selected = currentChoices[buttonIndex];
@@ -125,7 +114,6 @@ public class LevelUpManager : MonoBehaviour
         ResumeGame();
     }
 
-    
     void ApplyUpgrade(UpgradeType type)
     {
         switch (type)
@@ -138,11 +126,9 @@ public class LevelUpManager : MonoBehaviour
                 break;
             case UpgradeType.OrbitWeapon:
                 orbitWeapon.SetActive(true);
-                
                 break;
             case UpgradeType.PoisonPool:
                 poisonDropper.enabled = true;
-                
                 break;
             case UpgradeType.MaxHealth:
                 playerHealth.IncreaseMaxHealth(20f); 
@@ -155,12 +141,25 @@ public class LevelUpManager : MonoBehaviour
         levelUpPanel.SetActive(false);
         Time.timeScale = 1f;
 
-        // --- YENİ EKLENEN KISIM ---
-        // Oyuna geri dönüldüğünde görünmez joystick algılayıcısını tekrar aç
         if (mobileTouchZone != null)
         {
             mobileTouchZone.SetActive(true);
         }
-        // --------------------------
+
+        // --- EFEKTİ TETİKLEME KISMI ---
+        if (levelUpVFX != null)
+        {
+            StartCoroutine(PlayVFXRoutine());
+        }
+        // ------------------------------
     }
+
+    // --- EFEKTİ 1 SANİYE AÇIK TUTUP KAPATAN COROUTINE ---
+    private IEnumerator PlayVFXRoutine()
+    {
+        levelUpVFX.SetActive(true); // Efekti görünür yap (Particle System Play On Awake olduğu için otomatik oynar)
+        yield return new WaitForSeconds(1f); // Tam 1 saniye bekle
+        levelUpVFX.SetActive(false); // Efekti geri kapat
+    }
+    // ----------------------------------------------------
 }

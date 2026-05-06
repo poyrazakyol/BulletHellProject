@@ -36,7 +36,10 @@ public class RangedEnemyAI : MonoBehaviour
     {
         if (player == null) return;
 
-        agent.SetDestination(player.position);
+        if (agent.isActiveAndEnabled && agent.isOnNavMesh)
+        {
+            agent.SetDestination(player.position); // (Hedefin adı sende neyse o kalmalı)
+        }
         
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
         
