@@ -60,9 +60,9 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
-        if (player != null)
+        if (agent.isActiveAndEnabled && agent.isOnNavMesh)
         {
-            agent.SetDestination(player.position);
+            agent.SetDestination(player.position); // (Hedefin adı sende neyse o kalmalı)
         }
     }
     
