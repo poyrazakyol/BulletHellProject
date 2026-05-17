@@ -15,20 +15,26 @@ public class RangedEnemyAI : MonoBehaviour
     public Transform firePoint;     
 
     [Header("Effects & Drops")]
-    public GameObject xpGemSmall;  // Mavi XP
-    public GameObject xpGemMedium; // Yeşil XP
-    public GameObject xpGemLarge;  // Kırmızı XP
+    public GameObject xpGemSmall;  
+    public GameObject xpGemMedium; 
+    public GameObject xpGemLarge;  
     public GameObject deathEffectPrefab;
 
     private Transform player;
     private NavMeshAgent agent;
+    private Animator animator;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
+        
+        // Modeli Child (alt obje) yaptığımız için GetComponentInChildren kullanıyoruz
+        animator = GetComponentInChildren<Animator>();
+        
         currentHealth = maxHealth;
-
+        
+        // Düşman menzile girince DURSUN diyoruz
         agent.stoppingDistance = attackRange; 
     }
 
@@ -36,19 +42,33 @@ public class RangedEnemyAI : MonoBehaviour
     {
         if (player == null) return;
 
+        // 1. HAREKET VE ANİMASYON MANTIĞI
         if (agent.isActiveAndEnabled && agent.isOnNavMesh)
         {
-            agent.SetDestination(player.position); // (Hedefin adı sende neyse o kalmalı)
+            agent.SetDestination(player.position); 
+            
+            // Düşmanın mevcut hızını Animator'daki "Speed" parametresine gönderiyoruz.
+            // Menzile girip durduğunda bu hız 0 olacak ve Animator otomatik olarak "combat idle"a geçecek.
+            if (animator != null)
+            {
+                animator.SetFloat("Speed", agent.velocity.magnitude);
+            }
         }
         
+        // 2. SALDIRI MANTIĞI
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
         
         if (distanceToPlayer <= attackRange)
         {
+            // Düşman dursa bile oyuncuya doğru dönmeye devam etsin (Nişan alsın)
             Vector3 lookDir = player.position - transform.position;
             lookDir.y = 0;
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDir), Time.deltaTime * 5f);
+            if (lookDir != Vector3.zero)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDir), Time.deltaTime * 5f);
+            }
             
+            // Ateş etme süresi kontrolü
             fireTimer -= Time.deltaTime;
             if (fireTimer <= 0f)
             {
@@ -60,6 +80,12 @@ public class RangedEnemyAI : MonoBehaviour
 
     void Shoot()
     {
+        // Ateş etme animasyonunu (Trigger) tetikliyoruz
+        if (animator != null)
+        {
+            animator.SetTrigger("Shoot");
+        }
+
         Vector3 spawnPos = firePoint != null ? firePoint.position : transform.position + transform.forward;
         Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
     }
@@ -79,9 +105,7 @@ public class RangedEnemyAI : MonoBehaviour
             Destroy(effect, 1f);
         }
 
-        // --- ŞANSA BAĞLI XP DÜŞÜRME SİSTEMİ ---
         float randomVal = Random.value;
-        
         if (randomVal <= 0.05f) 
         {
             Instantiate(xpGemLarge, dropPos, Quaternion.identity);

@@ -63,6 +63,8 @@ public class LevelUpManager : MonoBehaviour
 
     public void ShowLevelUpMenu()
     {
+        if (SoundManager.instance != null)
+            SoundManager.instance.PlaySFX(SoundManager.instance.levelUpSFX);
         levelUpPanel.SetActive(true);
         Time.timeScale = 0f;
 
@@ -107,6 +109,8 @@ public class LevelUpManager : MonoBehaviour
 
     public void SelectUpgrade(int buttonIndex)
     {
+        if (SoundManager.instance != null)
+            SoundManager.instance.PlaySFX(SoundManager.instance.uiClickSFX);
         UpgradeOption selected = currentChoices[buttonIndex];
         selected.currentLevel++;
 

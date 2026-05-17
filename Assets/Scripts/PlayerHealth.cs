@@ -36,6 +36,8 @@ public class PlayerHealth : MonoBehaviour
         currentHealth -= damage;
         UpdateHealthBar();
 
+        if (SoundManager.instance != null)
+            SoundManager.instance.PlaySFX(SoundManager.instance.playerHitSFX);
         
         Camera.main.GetComponent<CameraFollow>().TriggerShake(0.2f);
 
@@ -71,6 +73,9 @@ public class PlayerHealth : MonoBehaviour
     
     public void RestartGame()
     {
+        
+        if (SoundManager.instance != null)
+            SoundManager.instance.PlaySFX(SoundManager.instance.uiClickSFX);
         
         Time.timeScale = 1f; 
         
