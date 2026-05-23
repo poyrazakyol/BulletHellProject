@@ -9,13 +9,13 @@ public class EnemyAI : MonoBehaviour
     
     [Header("Attack Settings")]
     public float damageAmount = 15f; 
-    public float attackRange = 2f; // Yakın dövüş menzili
+    public float attackRange = 2f; 
     public float attackRate = 1.5f;    
     private float attackTimer;
     
     private Transform player;
     private NavMeshAgent agent;
-    private Animator animator; // Animasyon kontrolcüsü
+    private Animator animator; 
     
     [Header("Drop and Effect Settings")]
     public GameObject xpGemSmall;  
@@ -28,12 +28,12 @@ public class EnemyAI : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
         
-        // Modeli (görseli) objenin içine sürükleyeceğin için GetComponentInChildren kullanıyoruz
+        
         animator = GetComponentInChildren<Animator>();
         
         currentHealth = maxHealth; 
         
-        // Düşman oyuncuya vurma mesafesine gelince dursun
+       
         agent.stoppingDistance = attackRange;
     }
 
@@ -41,24 +41,24 @@ public class EnemyAI : MonoBehaviour
     {
         if (player == null) return;
 
-        // --- 1. HAREKET VE ANİMASYON ---
+       
         if (agent.isActiveAndEnabled && agent.isOnNavMesh)
         {
             agent.SetDestination(player.position); 
             
-            // Düşmanın hızını Animator'a gönderiyoruz (Koşma/Durma geçişi için)
+            
             if (animator != null)
             {
                 animator.SetFloat("Speed", agent.velocity.magnitude);
             }
         }
 
-        // --- 2. SALDIRI MANTIĞI ---
+        
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
         
         if (distanceToPlayer <= attackRange)
         {
-            // Vururken oyuncuya dönmeye devam et
+            
             Vector3 lookDir = player.position - transform.position;
             lookDir.y = 0;
             if (lookDir != Vector3.zero)
@@ -66,7 +66,7 @@ public class EnemyAI : MonoBehaviour
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDir), Time.deltaTime * 5f);
             }
 
-            // Saldırı süresi kontrolü
+           
             attackTimer -= Time.deltaTime;
             if (attackTimer <= 0f)
             {
@@ -78,13 +78,13 @@ public class EnemyAI : MonoBehaviour
     
     void AttackPlayer()
     {
-        // 1. Animasyonu Tetikle
+        
         if (animator != null)
         {
             animator.SetTrigger("Attack");
         }
 
-        // 2. Oyuncuya Hasar Ver
+        
         PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
         if (playerHealth != null)
         {

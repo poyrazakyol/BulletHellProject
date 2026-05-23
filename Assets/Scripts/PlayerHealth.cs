@@ -87,15 +87,13 @@ public class PlayerHealth : MonoBehaviour
         maxHealth += bonusAmount;
         currentHealth += bonusAmount; 
         
-        UpdateHealthBarSize(); // Barı fiziksel olarak uzat!
-        UpdateHealthBar();     // İçindeki kırmızılığı yeni orana göre ayarla
+        UpdateHealthBarSize(); 
+        UpdateHealthBar();     
     }
     void UpdateHealthBarSize()
     {
         if (healthBarBackground != null)
         {
-            // Doğru Orantı: (Yeni Max Can / Eski Max Can) * İlk Genişlik
-            // Örn: (120 / 100) * 200 = 240 piksel yeni genişlik!
             float newWidth = (maxHealth / initialMaxHealth) * initialBarWidth;
             healthBarBackground.sizeDelta = new Vector2(newWidth, healthBarBackground.sizeDelta.y);
         }

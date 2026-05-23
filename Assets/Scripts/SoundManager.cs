@@ -5,8 +5,8 @@ public class SoundManager : MonoBehaviour
     public static SoundManager instance;
 
     [Header("Audio Sources")]
-    public AudioSource bgmSource; // Müzik için
-    public AudioSource sfxSource; // Ses efektleri için
+    public AudioSource bgmSource; 
+    public AudioSource sfxSource; 
 
     [Header("Müzik Dosyaları")]
     public AudioClip menuMusic;
@@ -19,9 +19,9 @@ public class SoundManager : MonoBehaviour
     public AudioClip playerHitSFX;
 
     [Range(0f, 1f)]
-    public float musicVolume = 0.5f; // Başlangıç müzik sesi
+    public float musicVolume = 0.5f; 
     [Range(0f, 1f)]
-    public float sfxVolume = 0.7f;   // SFX ses seviyesi
+    public float sfxVolume = 0.7f;   
 
     private bool isMuted = false;
 
@@ -47,7 +47,7 @@ public class SoundManager : MonoBehaviour
         PlayMenuMusic();
     }
 
-    // --- MÜZİK FONKSİYONLARI (İçleri tekrar dolduruldu!) ---
+    
     public void PlayMenuMusic()
     {
         if (bgmSource.clip == menuMusic) return; 
@@ -62,14 +62,14 @@ public class SoundManager : MonoBehaviour
         bgmSource.Play();
     }
 
-    // --- SES EFEKTİ ÇALMA FONKSİYONU ---
+    
     public void PlaySFX(AudioClip clip)
     {
         if (clip == null) return;
         sfxSource.PlayOneShot(clip);
     }
 
-    // --- SUSTURMA FONKSİYONU ---
+    
     public void ToggleMute()
     {
         isMuted = !isMuted;

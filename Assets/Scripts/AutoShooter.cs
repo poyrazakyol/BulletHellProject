@@ -42,7 +42,6 @@ public class AutoShooter : MonoBehaviour
             Vector3 directionToEnemy = (nearestEnemy.transform.position - firePoint.position).normalized;
             Quaternion projectileRotation = Quaternion.LookRotation(directionToEnemy);
             
-            // --- ATEŞ ETME SESİ BURADA TETİKLENİYOR ---
             if (SoundManager.instance != null)
             {
                 SoundManager.instance.PlaySFX(SoundManager.instance.playerAttackSFX);

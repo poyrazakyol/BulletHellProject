@@ -31,11 +31,9 @@ public class LevelUpManager : MonoBehaviour
     public TextMeshProUGUI[] buttonTexts; 
     
     public GameObject mobileTouchZone; 
-
-    // --- YENİ EKLENEN VFX REFERANSI ---
+    
     [Header("VFX")]
-    public GameObject levelUpVFX; // Karakterin içindeki "LevelUp" objesini buraya bağlayacağız
-    // ----------------------------------
+    public GameObject levelUpVFX; 
 
     [Header("Upgrade Pool")]
     public List<UpgradeOption> allUpgrades; 
@@ -150,20 +148,20 @@ public class LevelUpManager : MonoBehaviour
             mobileTouchZone.SetActive(true);
         }
 
-        // --- EFEKTİ TETİKLEME KISMI ---
+        
         if (levelUpVFX != null)
         {
             StartCoroutine(PlayVFXRoutine());
         }
-        // ------------------------------
+       
     }
 
-    // --- EFEKTİ 1 SANİYE AÇIK TUTUP KAPATAN COROUTINE ---
+    
     private IEnumerator PlayVFXRoutine()
     {
-        levelUpVFX.SetActive(true); // Efekti görünür yap (Particle System Play On Awake olduğu için otomatik oynar)
-        yield return new WaitForSeconds(1f); // Tam 1 saniye bekle
-        levelUpVFX.SetActive(false); // Efekti geri kapat
+        levelUpVFX.SetActive(true); 
+        yield return new WaitForSeconds(1f); 
+        levelUpVFX.SetActive(false); 
     }
-    // ----------------------------------------------------
+    
 }

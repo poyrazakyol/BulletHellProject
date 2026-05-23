@@ -5,7 +5,7 @@ public class MainMenuManager : MonoBehaviour
 {
     public void PlayGame()
     {
-        // 1. BUTON SESİ ÇAL
+        
         if (SoundManager.instance != null)
             SoundManager.instance.PlaySFX(SoundManager.instance.uiClickSFX);
 
@@ -29,7 +29,7 @@ public class MainMenuManager : MonoBehaviour
     {
         if (SoundManager.instance != null)
         {
-            // 2. BUTON SESİ ÇAL
+           
             SoundManager.instance.PlaySFX(SoundManager.instance.uiClickSFX);
             SoundManager.instance.ToggleMute();
         }

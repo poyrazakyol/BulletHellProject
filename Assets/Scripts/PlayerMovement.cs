@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     public MobileJoystick joystick;
 
     [Header("Animasyon")]
-    public Animator anim; // YENİ: Gorilin Animator referansı
+    public Animator anim; 
 
     private Rigidbody rb;
     private Vector3 moveInput;
@@ -33,15 +33,12 @@ public class PlayerMovement : MonoBehaviour
         }
         
         moveInput = new Vector3(moveX, 0f, moveZ).normalized;
-
-        // --- YENİ: ANİMASYONU TETİKLEME ---
+        
         if (anim != null)
         {
-            // moveInput.magnitude değeri karakter duruyorsa 0, hareket ediyorsa 0'dan büyük bir değer (maksimum 1) verir.
-            // Bu değeri Animator'deki Speed parametresine gönderiyoruz.
             anim.SetFloat("Speed", moveInput.magnitude);
         }
-        // ----------------------------------
+        
     }
 
     void FixedUpdate()

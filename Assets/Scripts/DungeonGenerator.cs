@@ -9,7 +9,6 @@ public class DungeonGenerator : MonoBehaviour
     [HideInInspector] 
     public List<Vector3> floorPositions = new List<Vector3>(); 
     
-    // YENİ: Ağaçların konumlarını tutacağımız liste
     [HideInInspector]
     public List<Vector3> treePositions = new List<Vector3>(); 
     
@@ -40,7 +39,6 @@ public class DungeonGenerator : MonoBehaviour
 
     [Header("Optimization")]
     public int chunkSize = 10; 
-    // DİKKAT: chunkManager değişkeni sadece burada tanımlanmalı!
     private MapChunkManager chunkManager; 
 
     int[,] map; 
@@ -65,20 +63,20 @@ public class DungeonGenerator : MonoBehaviour
 
         CleanIsolatedRooms(); 
 
-        DrawDungeon(); // 1. Objeleri sahnede oluştur (Henüz birleştirme!)
-        PlacePlayer(); // 2. Oyuncuyu yerleştir
+        DrawDungeon(); 
+        PlacePlayer(); 
         
-        // 3. ÖNCE NAVMESH'İ ÇİZ! (Objeler ayrı ayrıyken duvarları engel olarak algılasın)
+        
         GetComponent<NavMeshSurface>().BuildNavMesh(); 
 
-        // 4. NAVMESH ÇİZİLDİKTEN SONRA OPTİMİZASYON (BİRLEŞTİRME) YAP
+        
         BatchAllChunks();
 
-        // 5. UZAKTAKİ BÖLGELERİ KAPATMA SİSTEMİNİ BAŞLAT
+        
         chunkManager.StartOptimization();
     }
 
-    // Haritadaki tüm Chunk'ları bulup optimize eden yeni fonksiyon
+    
     void BatchAllChunks()
     {
         int chunkCountX = Mathf.CeilToInt((float)width / chunkSize);
@@ -169,7 +167,7 @@ public class DungeonGenerator : MonoBehaviour
 void DrawDungeon()
     {
         floorPositions.Clear(); 
-        treePositions.Clear(); // Harita her çizildiğinde ağaç listesini de temizle
+        treePositions.Clear(); 
 
         if (map != null)
         {
@@ -202,9 +200,9 @@ void DrawDungeon()
                     int currentChunkY = y / chunkSize;
                     Transform currentChunkParent = chunkParents[currentChunkX, currentChunkY].transform;
                     
-                    if (map[x, y] == 1) // DUVARLAR
+                    if (map[x, y] == 1) 
                     {
-                        if (wallPrefab != null) // Culling olmadan her duvara prefab koy
+                        if (wallPrefab != null) 
                         {
                             GameObject wall = Instantiate(wallPrefab, pos, Quaternion.identity, currentChunkParent);
 
@@ -213,7 +211,7 @@ void DrawDungeon()
                             wall.transform.position = new Vector3(pos.x, (randomHeight / 2f) - 0.5f, pos.z);
                         }
                     }
-                    else // ZEMİN VE AĞAÇLAR
+                    else
                     {
                         GameObject floor = Instantiate(floorPrefab, pos, Quaternion.identity, currentChunkParent);
                         
@@ -229,23 +227,19 @@ void DrawDungeon()
                         
                         Vector3 floorPos = new Vector3(pos.x, 1f, pos.z);
                         floorPositions.Add(floorPos);
-
-                        // AĞAÇ SPAWN KISMI (Mesafe Kontrolü Eklendi)
+                        
                         if (treePrefabs.Length > 0 && UnityEngine.Random.value <= treeSpawnChance)
                         {
                             Vector3 treePos = new Vector3(pos.x, 0f, pos.z); 
                             
-                            // Ağaç yerleştirmeden önce etrafında başka ağaç var mı diye kontrol et
                             if (CanSpawnTreeAt(treePos))
                             {
                                 int randomIndex = UnityEngine.Random.Range(0, treePrefabs.Length);
                                 GameObject tree = Instantiate(treePrefabs[randomIndex], treePos, Quaternion.identity, currentChunkParent);
                                 
-                                // Senin belirlediğin 0.4f scale prefab'den geleceği için buraya dokunmuyoruz.
-                                // Sadece Y ekseninde rastgele döndürüyoruz.
                                 tree.transform.rotation = Quaternion.Euler(0, UnityEngine.Random.Range(0f, 360f), 0);
                                 
-                                // Ağacın pozisyonunu listeye ekle (mesafe kontrolü için)
+                                
                                 treePositions.Add(treePos); 
                             }
                         }
@@ -255,12 +249,12 @@ void DrawDungeon()
         }
     }
 
-    // AĞAÇ MESAFE KONTROLÜ FONKSİYONU
+    
     bool CanSpawnTreeAt(Vector3 targetPos)
     {
         foreach (Vector3 existingPos in treePositions)
         {
-            // Eğer yeni konulacak ağaç, listedeki herhangi bir ağaca minTreeDistance'dan daha yakınsa iptal et
+            
             if (Vector3.Distance(targetPos, existingPos) < minTreeDistance)
             {
                 return false; 
@@ -341,16 +335,16 @@ void DrawDungeon()
         {
             for (int y = startY; y < height; y++)
             {
-                // YENİ: Zemin olan VE üstünde ağaç olmayan bir kare bul
+                
                 if (map[x, y] == 0) 
                 {
                     Vector3 potentialPosition = new Vector3(-width / 2 + x, 1f, -height / 2 + y);
                     
-                    // Bu pozisyonda bir ağaç var mı diye kontrol et
+                    
                     if (!treePositions.Contains(potentialPosition))
                     {
                         player.position = potentialPosition;
-                        return; // Güvenli pozisyon bulundu, yerleştir ve çık
+                        return; 
                     }
                 }
             }

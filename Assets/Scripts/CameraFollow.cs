@@ -5,7 +5,6 @@ public class CameraFollow : MonoBehaviour
     public Transform target;
     
     [Header("Camera Positioning")]
-    // Kamera karakterin neresinde duracak? (Y: Yukarıda, Z: Geride)
     public Vector3 offset = new Vector3(0f, 12f, -10f); 
 
     [Header("Camera Shake Settings")]
@@ -16,8 +15,7 @@ public class CameraFollow : MonoBehaviour
     void LateUpdate()
     {
         if (target == null) return;
-
-        // Kameranın hedef pozisyonu artık: Karakterin konumu + belirlediğimiz offset mesafesi
+        
         Vector3 targetPos = target.position + offset;
 
         if (Time.timeScale == 0f)

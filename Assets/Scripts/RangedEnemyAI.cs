@@ -29,38 +29,33 @@ public class RangedEnemyAI : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
         
-        // Modeli Child (alt obje) yaptığımız için GetComponentInChildren kullanıyoruz
         animator = GetComponentInChildren<Animator>();
         
         currentHealth = maxHealth;
         
-        // Düşman menzile girince DURSUN diyoruz
         agent.stoppingDistance = attackRange; 
     }
 
     void Update()
     {
         if (player == null) return;
-
-        // 1. HAREKET VE ANİMASYON MANTIĞI
+        
         if (agent.isActiveAndEnabled && agent.isOnNavMesh)
         {
             agent.SetDestination(player.position); 
             
-            // Düşmanın mevcut hızını Animator'daki "Speed" parametresine gönderiyoruz.
-            // Menzile girip durduğunda bu hız 0 olacak ve Animator otomatik olarak "combat idle"a geçecek.
             if (animator != null)
             {
                 animator.SetFloat("Speed", agent.velocity.magnitude);
             }
         }
         
-        // 2. SALDIRI MANTIĞI
+        
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
         
         if (distanceToPlayer <= attackRange)
         {
-            // Düşman dursa bile oyuncuya doğru dönmeye devam etsin (Nişan alsın)
+            
             Vector3 lookDir = player.position - transform.position;
             lookDir.y = 0;
             if (lookDir != Vector3.zero)
@@ -68,7 +63,7 @@ public class RangedEnemyAI : MonoBehaviour
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDir), Time.deltaTime * 5f);
             }
             
-            // Ateş etme süresi kontrolü
+            
             fireTimer -= Time.deltaTime;
             if (fireTimer <= 0f)
             {
@@ -80,7 +75,7 @@ public class RangedEnemyAI : MonoBehaviour
 
     void Shoot()
     {
-        // Ateş etme animasyonunu (Trigger) tetikliyoruz
+        
         if (animator != null)
         {
             animator.SetTrigger("Shoot");
