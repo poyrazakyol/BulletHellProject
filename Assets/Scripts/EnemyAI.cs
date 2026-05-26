@@ -9,17 +9,98 @@ public class EnemyAI : MonoBehaviour
     
     [Header("Attack Settings")]
     public float damageAmount = 15f; 
-    public float attackRate = 1f;    
+    public float attackRange = 2f; // Yakın dövüş menzili
+    public float attackRate = 1.5f;    
     private float attackTimer;
     
     private Transform player;
     private NavMeshAgent agent;
+    private Animator animator; // Animasyon kontrolcüsü
     
     [Header("Drop and Effect Settings")]
-    public GameObject xpGemSmall;  // Mavi XP
-    public GameObject xpGemMedium; // Yeşil XP
-    public GameObject xpGemLarge;  // Kırmızı XP
+    public GameObject xpGemSmall;  
+    public GameObject xpGemMedium; 
+    public GameObject xpGemLarge;  
     public GameObject deathEffectPrefab; 
+
+    void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        agent = GetComponent<NavMeshAgent>();
+        
+        // Modeli (görseli) objenin içine sürükleyeceğin için GetComponentInChildren kullanıyoruz
+        animator = GetComponentInChildren<Animator>();
+        
+        currentHealth = maxHealth; 
+        
+        // Düşman oyuncuya vurma mesafesine gelince dursun
+        agent.stoppingDistance = attackRange;
+    }
+
+    void Update()
+    {
+        if (player == null) return;
+
+        // --- 1. HAREKET VE ANİMASYON ---
+        if (agent.isActiveAndEnabled && agent.isOnNavMesh)
+        {
+            agent.SetDestination(player.position); 
+            
+            // Düşmanın hızını Animator'a gönderiyoruz (Koşma/Durma geçişi için)
+            if (animator != null)
+            {
+                animator.SetFloat("Speed", agent.velocity.magnitude);
+            }
+        }
+
+        // --- 2. SALDIRI MANTIĞI ---
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        
+        if (distanceToPlayer <= attackRange)
+        {
+            // Vururken oyuncuya dönmeye devam et
+            Vector3 lookDir = player.position - transform.position;
+            lookDir.y = 0;
+            if (lookDir != Vector3.zero)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDir), Time.deltaTime * 5f);
+            }
+
+            // Saldırı süresi kontrolü
+            attackTimer -= Time.deltaTime;
+            if (attackTimer <= 0f)
+            {
+                AttackPlayer();
+                attackTimer = attackRate;
+            }
+        }
+    }
+    
+    void AttackPlayer()
+    {
+        // 1. Animasyonu Tetikle
+        if (animator != null)
+        {
+            animator.SetTrigger("Attack");
+        }
+
+        // 2. Oyuncuya Hasar Ver
+        PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
+        if (playerHealth != null)
+        {
+            playerHealth.TakeDamage(damageAmount);
+        }
+    }
+    
+    public void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+        
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
 
     public void Die()
     {
@@ -31,70 +112,15 @@ public class EnemyAI : MonoBehaviour
             Destroy(effect, 1f); 
         }
 
-        // --- ŞANSA BAĞLI XP DÜŞÜRME SİSTEMİ ---
-        float randomVal = Random.value; // 0.0 ile 1.0 arası sayı üretir
+        float randomVal = Random.value; 
         
-        if (randomVal <= 0.05f) // %5 İhtimal
-        {
+        if (randomVal <= 0.05f) 
             Instantiate(xpGemLarge, dropPos, Quaternion.identity);
-        }
-        else if (randomVal <= 0.20f) // %15 İhtimal (0.05 ile 0.20 arası)
-        {
+        else if (randomVal <= 0.20f) 
             Instantiate(xpGemMedium, dropPos, Quaternion.identity);
-        }
-        else // Kalan %80 İhtimal
-        {
+        else 
             Instantiate(xpGemSmall, dropPos, Quaternion.identity);
-        }
         
         Destroy(gameObject);
-    }
-
-    void Start()
-    {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-        agent = GetComponent<NavMeshAgent>();
-        
-        currentHealth = maxHealth; 
-    }
-
-    void Update()
-    {
-        if (agent.isActiveAndEnabled && agent.isOnNavMesh)
-        {
-            agent.SetDestination(player.position); // (Hedefin adı sende neyse o kalmalı)
-        }
-    }
-    
-    void OnCollisionStay(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            attackTimer -= Time.deltaTime;
-            
-            if (attackTimer <= 0f)
-            {
-                collision.gameObject.GetComponent<PlayerHealth>().TakeDamage(damageAmount);
-                attackTimer = attackRate;
-            }
-        }
-    }
-    
-    void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            attackTimer = 0f; 
-        }
-    }
-    
-    public void TakeDamage(float damageAmount)
-    {
-        currentHealth -= damageAmount;
-        
-        if (currentHealth <= 0)
-        {
-            Die();
-        }
     }
 }

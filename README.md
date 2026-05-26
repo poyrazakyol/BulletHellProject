@@ -1,52 +1,54 @@
-# Gorillaz With Bananaz
+# Gorillaz with Bananaz 🦍🍌
 
-**Gorillaz With Bananaz** is a fast-paced, top-down Action Roguelite / Reverse Bullet Hell game developed for mobile platforms. Play as a magically gifted gorilla wielding enchanted bananas to fend off endless swarms of human captors in a high-stakes experiment orchestrated by hyper-intelligent space apes.
+A top-down, action-packed "Bullet Hell" and "Horde Survival" game (similar to Vampire Survivors and Brotato) where players must survive against waves of oncoming enemies, leveling up and upgrading their abilities by collecting experience points (XP).
 
-## 🦍 Game Overview
-In this "Bullet Heaven" experience, players navigate a series of increasingly hostile arenas. The game blends absurd humor with tight, strategic arcade gameplay, focusing on survival through character builds and primal agility.
+## 🌟 Features
 
-* **Platform:** Mobile (Currently on iOS)
-* **Engine:** Unity 6 (URP)
-* **Genre:** Action Roguelite / Reverse Bullet Hell
+### ⚔️ Combat & Survival Dynamics
+* **Auto-Shooter System:** Automatically detects and fires at the nearest enemy within the player's range (`AutoShooter` system).
+* **Dynamic Enemy AI:**
+  * **Melee Swarm:** Uses NavMesh to track the player, relentlessly rushing towards them and dealing damage upon contact. Features custom Mixamo-based humanoid animations.
+  * **Ranged Units:** Tactical enemies that maintain a specific distance, aim at the player, and fire projectiles.
+* **Advanced Damage Feedback:** Screen shake (Camera Shake) upon taking damage, real-time health bar updates, and hit reactions accompanied by custom SFX.
 
-## 🚀 Key Gameplay Features
+### 🧬 Level Up & Progression System
+* **XP Gem System:** Small (Blue), Medium (Green), and Large (Red) experience gems that drop from defeated enemies based on chance.
+* **Random Skill Selection (Roguelite Elements):** Pauses the game upon leveling up and offers the player 3 random upgrade choices from the pool:
+  * **Improve Fire Rate:** Increases attack speed.
+  * **Move Speed:** Increases the character's movement speed.
+  * **Unlock Orbit Weapon:** Activates an orbital weapon rotating around the character, damaging nearby enemies.
+  * **Unlock Poison Pool:** Spawns toxic pools on the ground that deal damage over time to enemies.
+  * **Max Health:** Increases the total health pool and dynamically extends the health bar UI.
 
-* **Hybrid Combat System:** Features traditional "auto-battler" mechanics combined with **Active-Targeting Skills**, requiring player input for high-impact strikes.
-* **The "Keep-2" Progression:** At the end of each level, your arsenal is purged. You must strategically choose exactly **two skills** to carry over to the next biome, ensuring a fresh meta-game for every stage.
-* **Boss Stalling (Risk vs. Reward):** Once a boss spawns, you aren't forced to kill it immediately. You can stall to farm more XP, but the boss gains stacking lethal buffs every minute.
-* **Curated Draft Pool:** Level up to choose from a randomized pool of 11 total skills (7 General, 3 Unique, and 1 Wild card).
-* **Strict Loadout Constraints:** Players are limited to 5 active slots—3 for magical weaponry and 2 dedicated to "Player Skills" (innate primate abilities), preventing over-reliance on projectiles.
+### 🎮 Cross-Platform Controls (Mobile & PC)
+* **Dynamic Virtual Joystick:** A custom mobile joystick (`MobileJoystick`) that appears where the player touches the screen, equipped with multi-touch protection.
+* **PC Controls:** Full mouse and keyboard integration for seamless testing and desktop gameplay.
 
-## 🛠️ Technical Implementation
+### 🎵 Audio Engine (Singleton Sound Manager)
+* A centralized sound management system that persists across scenes without interruption, separating background music (BGM) and sound effects (SFX) into independent channels.
+* **Polyphonic SFX:** Allows multiple overlapping sounds—such as attacks, taking damage, UI clicks, and leveling up—to play simultaneously without cutting each other off.
+* **Mute Toggle:** Fully functional UI button to mute/unmute all game audio instantly.
 
-### Mobile & UI Optimization
-* **Floating Joystick:** A dynamic "Mobile Touch Zone" system that appears at the point of contact, ensuring a clear field of view and preventing UI fatigue.
-* **Smart UI Interactivity:** Automatic disabling of joystick input during "Level Up" menus to prevent Raycast conflicts and movement bugs.
-* **iOS Deployment:** Full Xcode integration with managed signing and Bundle Identifier optimization for rapid prototyping on physical devices.
+### 💻 User Interface (UI)
+* **Responsive Layouts:** Carefully anchored UI panels that maintain their proportions and alignment perfectly across various resolutions (different smartphone screens and monitors).
+* **High-Definition Fonts:** Custom fonts processed and baked specifically for TextMeshPro (TMP) to ensure crystal-clear text readability.
 
-### Movement & AI
-* **Humanoid Animation Rigging:** Physics-based 3D Gorilla character utilizing Unity’s Humanoid rig system with optimized "Bake Into Pose" animation clips to prevent axis drift.
-* **Isometric Camera Follow:** A custom camera script featuring adjustable offsets, smooth target tracking, and a **Screen Shake** system for high-impact combat feedback.
-* **Rigidbody Physics:** Movement is handled via velocity-based acceleration and Slerp-based rotation for a responsive, weightful feel.
+## 🛠️ Tech Stack & Tools
+* **Game Engine:** Unity 6 (Universal Render Pipeline - URP)
+* **AI & Pathfinding:** Unity NavMesh Agent
+* **Animation:** Mixamo (Humanoid Rigging, Avatar Configurations)
+* **UI Framework:** TextMeshPro (TMP), Canvas UI
 
-### Level Generation & Director
-* **Procedural Content:** Levels utilize Cellular Automata for layout generation with Flood-Fill algorithms to ensure map connectivity.
-* **Game Director:** A background system that monitors survival time to dynamically scale enemy health, speed, and spawn frequency.
+## 📂 Core Script Architecture
+* `PlayerMovement.cs` / `MobileJoystick.cs`: Manages character movement and mobile touch inputs.
+* `PlayerHealth.cs`: Handles player health, damage registration, and Game Over states.
+* `AutoShooter.cs`: Controls enemy detection and automated weapon firing.
+* `EnemyAI.cs` / `RangedEnemyAI.cs`: Manages enemy decision trees, pathfinding, and randomized XP drop rates.
+* `LevelUpManager.cs`: Monitors XP progression, handles game pausing, and selects random perks from the upgrade pool.
+* `SoundManager.cs`: A Singleton-pattern controller managing all audio channels and clips.
 
-## ⚙️ Tech Stack
-* **Unity 6:** Core engine and rendering.
-* **Universal Render Pipeline (URP):** For optimized mobile performance and atmospheric lighting.
-* **C#:** Logic, AI, and system architecture.
-* **Mixamo:** Humanoid character animations.
-* **Xcode:** iOS deployment and device testing.
-
-## 📱 How to Build
-1. Clone the repository to your PC.
-2. Open the project in **Unity Hub** (Unity 6 required).
-
-## 👥 The Team
-* **Poyraz Akyol** - Lead Game Developer / Computer Engineer
-* **Mehmet Levent Postalcıoğlu** - Game Designer / Developer
-
----
-*Developed as part of the Hacettepe University Game Technologies MSc program - Mobile Game Development Course.*
+## 🚀 Installation & Setup
+1. Clone the repository.
+2. Open the project using **Unity 6** or a newer version.
+3. Open the `MainMenu` scene from the Hierarchy window.
+4. Press the `Play` button to start surviving!
