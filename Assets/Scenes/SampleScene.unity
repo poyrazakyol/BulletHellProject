@@ -328,7 +328,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9dd1cdbc2b400147987b43f74e4fe08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 200
   currentHealth: 0
   healthBarFill: {fileID: 1785000425}
   gameOverPanel: {fileID: 436250110}
@@ -1693,14 +1693,14 @@ MonoBehaviour:
   player: {fileID: 18027383}
   width: 150
   height: 150
-  randomFillPercent: 45
+  randomFillPercent: 40
   seed: 
   useRandomSeed: 1
   wallPrefab: {fileID: 2310952805912221881, guid: 2c91dfd5019c76b459e536d326035dd4, type: 3}
   treePrefabs:
   - {fileID: 7513896259935249199, guid: a722465517f918942849e9634d42ea3c, type: 3}
   minTreeDistance: 2.5
-  treeSpawnChance: 0.05
+  treeSpawnChance: 0.0425
   floorPrefab: {fileID: 1975740827846140732, guid: 1e7465ce03940134c818e6859b3b3d24, type: 3}
   floorMaterials:
   - {fileID: 2100000, guid: 1cef938def0b527469f8ef0720c534dc, type: 2}

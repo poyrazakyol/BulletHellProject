@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class PlayerHealth : MonoBehaviour
 {
     [Header("Health Settings")]
-    public float maxHealth = 100f;
+    public float maxHealth = 200f;
     public float currentHealth;
 
     [Header("UI")]
