@@ -137,6 +137,12 @@ GameObject:
   - component: {fileID: 18027386}
   - component: {fileID: 18027385}
   - component: {fileID: 18027387}
+  - component: {fileID: 18027393}
+  - component: {fileID: 18027392}
+  - component: {fileID: 18027391}
+  - component: {fileID: 18027390}
+  - component: {fileID: 18027389}
+  - component: {fileID: 18027388}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -333,6 +339,7 @@ MonoBehaviour:
   healthBarFill: {fileID: 1785000425}
   gameOverPanel: {fileID: 436250110}
   healthBarBackground: {fileID: 0}
+  shieldDamageReductionPercent: 0
 --- !u!114 &18027387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -347,6 +354,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   poisonPrefab: {fileID: 4407855117254972350, guid: 94d50d8e5ad629a4a9fb2bef36c61c76, type: 3}
   dropRate: 3
+--- !u!1 &52484569
 --- !u!1 &92117000 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3280519133430969738, guid: a71be3e7990efb040a07565c43cbb198, type: 3}
@@ -1817,6 +1825,41 @@ MonoBehaviour:
     type: 4
     maxLevel: 5
     currentLevel: 0
+  - upgradeName: Pineapple Cannon
+    description: Deneme Desc
+    type: 10
+    maxLevel: 5
+    currentLevel: 0
+  - upgradeName: Apple Meteor
+    description: Deneme Desc
+    type: 9
+    maxLevel: 5
+    currentLevel: 0
+  - upgradeName: Lightning Strike
+    description: Deneme Desc
+    type: 6
+    maxLevel: 5
+    currentLevel: 0
+  - upgradeName: Corn Dagger
+    description: Deneme Desc
+    type: 7
+    maxLevel: 5
+    currentLevel: 0
+  - upgradeName: Gravity Pumpkin
+    description: Deneme Desc
+    type: 11
+    maxLevel: 5
+    currentLevel: 0
+  - upgradeName: Banana Shield
+    description: Deneme Desc
+    type: 8
+    maxLevel: 5
+    currentLevel: 0
+  - upgradeName: Dragon Boomerang
+    description: Deneme Desc
+    type: 5
+    maxLevel: 5
+    currentLevel: 0
   orbitWeapon: {fileID: 1926134487}
   poisonDropper: {fileID: 18027387}
 --- !u!114 &1179629848
@@ -2153,6 +2196,130 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1214589777}
   m_CullTransparentMesh: 1
+--- !u!1 &1227554054
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1227554055}
+  - component: {fileID: 1227554059}
+  - component: {fileID: 1227554058}
+  - component: {fileID: 1227554057}
+  - component: {fileID: 1227554056}
+  m_Layer: 0
+  m_Name: AegisShield
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1227554055
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1227554054}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 18027383}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1227554056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1227554054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c20b1e8d2ba8f24489e9cf3106a53e12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageReductionPercent: 0.2
+  tickDamage: 10
+  tickRate: 0.5
+--- !u!135 &1227554057
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1227554054}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1227554058
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1227554054}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: dbd440e6d0e48bb45878840ce816b0ec, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1227554059
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1227554054}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1240845102
 GameObject:
   m_ObjectHideFlags: 0
@@ -3017,6 +3184,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.8725001, y: 0.8398861}
   m_AnchorMax: {x: 1, y: 0.9332216}
+  m_AnchoredPosition: {x: -0.14068604, y: -0.3000183}
   m_AnchoredPosition: {x: -0.140625, y: -0.3000183}
   m_SizeDelta: {x: 0.28131104, y: 0.7480011}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3170,6 +3338,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.92300004}
   m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 30}
   m_AnchoredPosition: {x: 0.000061035156, y: 2.1999817}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
@@ -3571,6 +3741,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_AnchoredPosition: {x: 1.0437, y: 0.8966999}
   m_SizeDelta: {x: -25.6986, y: -10.302}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4054,6 +4226,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0.7061157, y: 1.0611}
   m_SizeDelta: {x: -116.1599, y: -15.768}
   m_Pivot: {x: 0.5, y: 0.5}
