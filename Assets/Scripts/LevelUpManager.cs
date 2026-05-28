@@ -54,7 +54,15 @@ public class LevelUpManager : MonoBehaviour
     private AutoShooter playerShooter;
     private PlayerMovement playerMove;
     private PlayerHealth playerHealth;
- main
+
+    private BoomerangShooter boomerangWeapon;
+    private LightningShooter lightningWeapon;
+    private DirectShotShooter directShotWeapon;
+    private ShieldWeapon shieldWeapon;
+    private MeteorShooter meteorWeapon;
+    private CoconutCannon coconutWeapon;
+    private GravityVortexShooter gravityWeapon;
+
     private List<UpgradeOption> currentChoices = new List<UpgradeOption>();
 
     void Start()
