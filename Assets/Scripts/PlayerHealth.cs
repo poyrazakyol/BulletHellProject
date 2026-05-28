@@ -31,8 +31,16 @@ public class PlayerHealth : MonoBehaviour
     }
 
     
+    [HideInInspector]
+    public float shieldDamageReductionPercent = 0f;
+
     public void TakeDamage(float damage)
     {
+        if (shieldDamageReductionPercent > 0f)
+        {
+            damage *= (1f - shieldDamageReductionPercent);
+        }
+
         currentHealth -= damage;
         UpdateHealthBar();
 

@@ -10,7 +10,14 @@ public enum UpgradeType
     MoveSpeed,
     OrbitWeapon,
     PoisonPool,
-    MaxHealth
+    MaxHealth,
+    Boomerang,
+    LightningStrike,
+    DirectShot,
+    Shield,
+    MeteorStorm,
+    CoconutCannon,
+    GravityVortex
 }
 
 
@@ -46,7 +53,19 @@ public class LevelUpManager : MonoBehaviour
     private PlayerMovement playerMove;
     private PlayerHealth playerHealth;
 
+<<<<<<< Updated upstream
     
+=======
+    // YENİ SİLAHLAR İÇİN REFERANSLAR
+    private BoomerangShooter boomerangWeapon;
+    private LightningShooter lightningWeapon;
+    private DirectShotShooter directShotWeapon;
+    private ShieldWeapon shieldWeapon;
+    private MeteorShooter meteorWeapon;
+    private CoconutCannon coconutWeapon;
+    private GravityVortexShooter gravityWeapon;
+
+>>>>>>> Stashed changes
     private List<UpgradeOption> currentChoices = new List<UpgradeOption>();
 
     void Start()
@@ -57,6 +76,15 @@ public class LevelUpManager : MonoBehaviour
             playerShooter = player.GetComponent<AutoShooter>();
             playerMove = player.GetComponent<PlayerMovement>();
             playerHealth = player.GetComponent<PlayerHealth>();
+
+            // Yeni silah bileşenlerini bul (Oyuncunun üstünde disabled olarak durduklarını varsayıyoruz)
+            boomerangWeapon = player.GetComponent<BoomerangShooter>();
+            lightningWeapon = player.GetComponent<LightningShooter>();
+            directShotWeapon = player.GetComponent<DirectShotShooter>();
+            shieldWeapon = player.GetComponentInChildren<ShieldWeapon>(true); // (true) ile kapalı olan çocuk objelerdeki componentleri de buluruz!
+            meteorWeapon = player.GetComponent<MeteorShooter>();
+            coconutWeapon = player.GetComponent<CoconutCannon>();
+            gravityWeapon = player.GetComponent<GravityVortexShooter>();
         }
     }
 
@@ -146,6 +174,62 @@ public class LevelUpManager : MonoBehaviour
                 break;
             case UpgradeType.MaxHealth:
                 playerHealth.IncreaseMaxHealth(20f); 
+                break;
+            case UpgradeType.Boomerang:
+                if (boomerangWeapon != null)
+                {
+                    if (!boomerangWeapon.enabled) boomerangWeapon.enabled = true;
+                    else boomerangWeapon.boomerangCount++;
+                }
+                break;
+            case UpgradeType.LightningStrike:
+                if (lightningWeapon != null)
+                {
+                    if (!lightningWeapon.enabled) lightningWeapon.enabled = true;
+                    else { lightningWeapon.targetCount++; lightningWeapon.damage += 10f; }
+                }
+                break;
+            case UpgradeType.DirectShot:
+                if (directShotWeapon != null)
+                {
+                    if (!directShotWeapon.enabled) directShotWeapon.enabled = true;
+                    else directShotWeapon.projectileCount++;
+                }
+                break;
+            case UpgradeType.Shield:
+                if (shieldWeapon != null)
+                {
+                    if (!shieldWeapon.gameObject.activeSelf) 
+                    {
+                        shieldWeapon.gameObject.SetActive(true);
+                        shieldWeapon.enabled = true;
+                    }
+                    else 
+                    {
+                        shieldWeapon.UpdateStats(shieldWeapon.damageReductionPercent + 0.05f, shieldWeapon.tickDamage + 5f);
+                    }
+                }
+                break;
+            case UpgradeType.MeteorStorm:
+                if (meteorWeapon != null)
+                {
+                    if (!meteorWeapon.enabled) meteorWeapon.enabled = true;
+                    else { meteorWeapon.meteorCount++; meteorWeapon.damage += 20f; }
+                }
+                break;
+            case UpgradeType.CoconutCannon:
+                if (coconutWeapon != null)
+                {
+                    if (!coconutWeapon.enabled) coconutWeapon.enabled = true;
+                    else { coconutWeapon.damage += 20f; coconutWeapon.aoeRadius += 1f; }
+                }
+                break;
+            case UpgradeType.GravityVortex:
+                if (gravityWeapon != null)
+                {
+                    if (!gravityWeapon.enabled) gravityWeapon.enabled = true;
+                    else { gravityWeapon.pullRadius += 1f; gravityWeapon.tickDamage += 3f; }
+                }
                 break;
         }
     }
