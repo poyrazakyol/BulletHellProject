@@ -19,6 +19,7 @@ public class GameDirector : MonoBehaviour
 
     void Start()
     {
+        Application.targetFrameRate = 60;
         spawner = GetComponent<EnemySpawner>();
         nextDifficultySpike = difficultyIncreaseInterval;
     }
