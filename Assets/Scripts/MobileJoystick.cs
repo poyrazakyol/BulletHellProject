@@ -8,7 +8,9 @@ public class MobileJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler, 
     public RectTransform joystickKnob;
     
     private Vector2 inputVector;
-    private Vector2 startingPosition; // Joystick'in ilk saklandığı yer
+    
+    // YENİ: Çoklu dokunma çakışmalarını önlemek için parmak kimliği
+    private int currentFingerId = -1; 
 
     void Start()
     {
@@ -18,6 +20,12 @@ public class MobileJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler, 
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        // Eğer zaten bir parmak joystick'i kullanıyorsa, diğer dokunuşları yoksay
+        if (currentFingerId != -1) return; 
+        
+        // Dokunan parmağın kimliğini kaydet
+        currentFingerId = eventData.pointerId; 
+
         // 1. Ekrana dokunulduğunda joystick'i parmağın olduğu yere taşı ve görünür yap
         joystickBackground.position = eventData.position;
         joystickBackground.gameObject.SetActive(true);
@@ -28,6 +36,9 @@ public class MobileJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler, 
 
     public void OnDrag(PointerEventData eventData)
     {
+        // Eğer sürükleyen parmak, ilk dokunan parmak değilse yoksay
+        if (eventData.pointerId != currentFingerId) return; 
+
         // 2. Parmağı kaydırdıkça topuzu (Knob) arka planın içinde hareket ettir
         Vector2 position;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(joystickBackground, eventData.position, eventData.pressEventCamera, out position);
@@ -45,7 +56,11 @@ public class MobileJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler, 
 
     public void OnPointerUp(PointerEventData eventData)
     {
+        // Kalkan parmak, bizim joystick'i tutan parmak değilse hiçbir şey yapma
+        if (eventData.pointerId != currentFingerId) return; 
+
         // 3. Parmak ekrandan çekildiğinde değerleri sıfırla ve joystick'i gizle
+        currentFingerId = -1; // Parmağı boşa çıkar
         inputVector = Vector2.zero;
         joystickKnob.anchoredPosition = Vector2.zero;
         HideJoystick();
@@ -59,6 +74,7 @@ public class MobileJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler, 
     // Bu obje kodla veya menü açılışıyla kapatıldığında otomatik çalışır
     void OnDisable()
     {
+        currentFingerId = -1; // Kapanırken parmak kilidini de sıfırla
         inputVector = Vector2.zero; // Hareketi sıfırla
         if (joystickKnob != null) 
         {
